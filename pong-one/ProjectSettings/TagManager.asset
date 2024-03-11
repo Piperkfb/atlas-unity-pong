@@ -7,6 +7,7 @@ TagManager:
   - Paddle
   - Wall
   - Goal
+  - Ball
   layers:
   - Default
   - TransparentFX
@@ -14,7 +15,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - GameObj
   - 
   - 
   - 
@@ -43,4 +44,13 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 1077620523
+    locked: 0
+  - name: MidGround
+    uniqueID: 2612401889
+    locked: 0
+  - name: ForeGround
+    uniqueID: 1234148907
     locked: 0
