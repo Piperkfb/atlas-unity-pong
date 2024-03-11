@@ -7,11 +7,13 @@ using UnityEngine.Playables;
 public class Ball : MonoBehaviour
 {
     private Rigidbody2D _ridgy; 
+    private RectTransform _ridgypos;
     public float speed = 10.0f;
     private Vector2 direction;
     private void Awake()
     {
         _ridgy = GetComponent<Rigidbody2D>();
+        _ridgypos = GetComponent<RectTransform>();
     }
 
     private void Start()
@@ -33,15 +35,35 @@ public class Ball : MonoBehaviour
     {
         if (boink.gameObject.CompareTag("Paddle"))
         {
-            direction.x = -direction.x * 2;
-            direction.y = -direction.y * 2;
-            _ridgy.AddForce(direction * this.speed);
+            Paddle paddle = boink.gameObject.GetComponent<Paddle>();
+            RectTransform paddlepos = boink.gameObject.GetComponent<RectTransform>();
+            
+            //calculate angle
+            float y = launchAngle(AnchorPos(), paddlepos.anchoredPosition, paddlepos.sizeDelta.y / 2f);
+
+            //set angle and speed
+            float x = _ridgy.velocity.x < 0 ? 1.0f : -1.0f;
+            Vector2 d = new Vector2(x, y).normalized;
+            //_ridgy.velocity = d * this.speed * 1.5F;
+            
+            //direction.y = -direction.y;
+            _ridgy.velocity = Vector2.zero;
+            _ridgy.AddForce(d * this.speed);
         } 
         if (boink.gameObject.CompareTag("Wall"))
         {
-            direction.y = -direction.y * 2;
+            direction.y = -direction.y;
+            _ridgy.velocity = Vector2.zero;
             _ridgy.AddForce(direction * this.speed);
         }
 
     }
+    float launchAngle(Vector2 ball, Vector2 paddle, float paddleHeight) 
+    {
+        return (ball.y - paddle.y) / paddleHeight;
+    }
+     public Vector2 AnchorPos()
+        {
+            return _ridgypos.anchoredPosition;
+        }
 }
