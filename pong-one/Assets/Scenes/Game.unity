@@ -1125,7 +1125,7 @@ GameObject:
   - component: {fileID: 1635252837}
   - component: {fileID: 1635252836}
   m_Layer: 5
-  m_Name: Midline
+  m_Name: MidLine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1311,7 +1311,7 @@ GameObject:
   - component: {fileID: 1945735908}
   m_Layer: 5
   m_Name: LeftGoal
-  m_TagString: Untagged
+  m_TagString: Goal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1654,7 +1654,7 @@ GameObject:
   - component: {fileID: 2110309564}
   m_Layer: 5
   m_Name: RightGoal
-  m_TagString: Untagged
+  m_TagString: Goal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
