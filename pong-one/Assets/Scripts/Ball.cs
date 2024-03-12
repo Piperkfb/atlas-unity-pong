@@ -6,8 +6,10 @@ using UnityEngine.Playables;
 using UnityEngine.UI;
 using TMPro;
 
+
 public class Ball : MonoBehaviour
 {
+    private AudioSource[] blipbloops;
     private Rigidbody2D _ridgy; 
     private RectTransform _ridgypos;
     public float speed = 10.0f;
