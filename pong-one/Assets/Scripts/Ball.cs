@@ -11,12 +11,14 @@ using UnityEngine.SceneManagement;
 
 public class Ball : MonoBehaviour
 {
-    private AudioSource[] blipbloops;
+    private AudioSource SoundFX;
+    public AudioClip SFXPad, SFXWall, SFXScore, SFXWin, SFXLose;
     private Rigidbody2D _ridgy; 
     private RectTransform _ridgypos;
-    public float speed = 10.0f;
+    public float speed;
     public GameObject scoreMenu;
     public GameObject WinMenu;
+    public GameObject P2, Com;
     public TMP_Text leftScore;
     public TMP_Text rightScore;
     private float leftScoreNumber = 0;
@@ -35,6 +37,17 @@ public class Ball : MonoBehaviour
     private void Start()
     {
         AddStartingForce();
+        SoundFX = this.GetComponent<AudioSource>();
+        if (ModeMenu.ComOn == true)
+        {
+            P2.SetActive(false);
+            Com.SetActive(true);
+        }
+        else if (ModeMenu.ComOn == false)
+        {
+            P2.SetActive(true);
+            Com.SetActive(false);
+        }
     }
     // protected void startingPositions()
     // {
@@ -56,20 +69,7 @@ public class Ball : MonoBehaviour
     }
     private void Update()
     {
-        if (leftScoreNumber == 11 || rightScoreNumber == 11)
-        {
-            //pause paddles
-            
-            GameObject[] allpaddles = GameObject.FindGameObjectsWithTag("Paddle");
-            foreach(GameObject paddles in allpaddles)
-            {
-                Rigidbody2D padrid = paddles.GetComponent<Rigidbody2D>();
-                padrid.constraints = RigidbodyConstraints2D.FreezePosition;
-            }
-            //display win, replay menu
 
-            Debug.Log ("You win! wow");
-        }
     }
 
     protected void OnTriggerEnter2D(Collider2D boink)
@@ -89,15 +89,19 @@ public class Ball : MonoBehaviour
             //direction.y = -direction.y;
             _ridgy.velocity = Vector2.zero;
             _ridgy.AddForce(d * this.speed);
+            //Sound FX
+            SoundFX.clip = SFXPad;
+            SoundFX.Play();
         } 
         if (boink.gameObject.CompareTag("Wall"))
         {
             
             Vector2 VelSave = _ridgy.velocity;
             VelSave.y = -VelSave.y;
-            //_ridgy.velocity = Vector2.zero;
             _ridgy.velocity = VelSave;
-            //_ridgy.AddForce(VelSave * this.speed);
+            //sound FX
+            SoundFX.clip = SFXWall;
+            SoundFX.Play();
         }
         if (boink.gameObject.CompareTag("Goal"))
         {
@@ -115,6 +119,8 @@ public class Ball : MonoBehaviour
                 rightScore.text = $"{rightScoreNumber}";
                 whoScored.text = $"P2";
             }
+            SoundFX.clip = SFXScore;
+            SoundFX.Play();
             if (leftScoreNumber == 11 || rightScoreNumber == 11)
             {
                 WinScreen();
@@ -148,14 +154,20 @@ public class Ball : MonoBehaviour
         if (leftScoreNumber == 11)
         {
             WhoWon.text = $"P1";
+            SoundFX.clip = SFXWin;
+            SoundFX.Play();
         }
         else if (rightScoreNumber == 11)
         {
             WhoWon.text = $"P2";
+            SoundFX.clip = SFXLose;
+            SoundFX.Play();
         }
         WinMenu.SetActive(true);
+        SoundFX.clip = SFXWin;
+        SoundFX.Play();
         Invoke("PlayAgain", 2);
-            //display win, replay menu
+        //display win, replay menu
     }
     public void PlayAgain()
     {
