@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.UI;
 using TMPro;
+using UnityEditor.SearchService;
+using UnityEngine.SceneManagement;
 
 
 public class Ball : MonoBehaviour
@@ -13,13 +15,14 @@ public class Ball : MonoBehaviour
     private Rigidbody2D _ridgy; 
     private RectTransform _ridgypos;
     public float speed = 10.0f;
-    private Vector2 direction;
     public GameObject scoreMenu;
+    public GameObject WinMenu;
     public TMP_Text leftScore;
     public TMP_Text rightScore;
     private float leftScoreNumber = 0;
     private float rightScoreNumber = 0;
     public TMP_Text whoScored;
+    public TMP_Text WhoWon;
     private Vector2 BallResetPos;
     
     private void Awake()
@@ -27,13 +30,11 @@ public class Ball : MonoBehaviour
         _ridgy = GetComponent<Rigidbody2D>();
         _ridgypos = GetComponent<RectTransform>();
         BallResetPos = _ridgypos.transform.position;
-        
     }
 
     private void Start()
     {
         AddStartingForce();
-        
     }
     // protected void startingPositions()
     // {
@@ -49,7 +50,7 @@ public class Ball : MonoBehaviour
     {
         float x = Random.value < 0.5f ? -1.0f : 1.0f;
         float y = Random.value < 0.5f ? Random.Range(-1.0f, -0.5f) : Random.Range(0.5f, 1.0f);
-        direction = new Vector2(x,y);
+        Vector2 direction = new Vector2(x,y);
 
         _ridgy.AddForce(direction * this.speed);
     }
@@ -57,6 +58,16 @@ public class Ball : MonoBehaviour
     {
         if (leftScoreNumber == 11 || rightScoreNumber == 11)
         {
+            //pause paddles
+            
+            GameObject[] allpaddles = GameObject.FindGameObjectsWithTag("Paddle");
+            foreach(GameObject paddles in allpaddles)
+            {
+                Rigidbody2D padrid = paddles.GetComponent<Rigidbody2D>();
+                padrid.constraints = RigidbodyConstraints2D.FreezePosition;
+            }
+            //display win, replay menu
+
             Debug.Log ("You win! wow");
         }
     }
@@ -81,39 +92,74 @@ public class Ball : MonoBehaviour
         } 
         if (boink.gameObject.CompareTag("Wall"))
         {
-            direction.y = -direction.y;
-            direction.x = -direction.x;
-            _ridgy.velocity = Vector2.zero;
-            _ridgy.AddForce(direction * this.speed);
+            
+            Vector2 VelSave = _ridgy.velocity;
+            VelSave.y = -VelSave.y;
+            //_ridgy.velocity = Vector2.zero;
+            _ridgy.velocity = VelSave;
+            //_ridgy.AddForce(VelSave * this.speed);
         }
         if (boink.gameObject.CompareTag("Goal"))
         {
             Debug.Log ("Goal!!");
             _ridgy.velocity = Vector2.zero;
-            if (boink.gameObject.transform.position.x > 0)
+            if (boink.gameObject.transform.localPosition.x > 0)
             {
                 leftScoreNumber++;
                 leftScore.text = $"{leftScoreNumber}";
                 whoScored.text = $"P1";
             }
-            else if (boink.gameObject.transform.position.x < 0)
+            else if (boink.gameObject.transform.localPosition.x < 0)
             {
                 rightScoreNumber++;
                 rightScore.text = $"{rightScoreNumber}";
                 whoScored.text = $"P2";
             }
-            scoreMenu.SetActive(true);
-            GameObject[] allpaddles = GameObject.FindGameObjectsWithTag("Paddle");
-            foreach(GameObject paddles in allpaddles)
+            if (leftScoreNumber == 11 || rightScoreNumber == 11)
             {
-                Rigidbody2D padrid = paddles.GetComponent<Rigidbody2D>();
-                padrid.constraints = RigidbodyConstraints2D.FreezePosition;
+                WinScreen();
             }
-            Invoke("ResetPos", 2.0f);
-            Invoke("AddStartingForce", 3.0f);
+            else
+            {
+                scoreMenu.SetActive(true);
+                GameObject[] allpaddles = GameObject.FindGameObjectsWithTag("Paddle");
+                foreach(GameObject paddles in allpaddles)
+                {
+                    Rigidbody2D padrid = paddles.GetComponent<Rigidbody2D>();
+                    padrid.constraints = RigidbodyConstraints2D.FreezePosition;
+                }
+                Invoke("ResetPos", 2.0f);
+                Invoke("AddStartingForce", 3.0f);
+            }
             
         }
 
+    }
+    private void WinScreen()
+    {
+        //pause paddles
+        
+        GameObject[] allpaddles = GameObject.FindGameObjectsWithTag("Paddle");
+        foreach(GameObject paddles in allpaddles)
+        {
+            Rigidbody2D padrid = paddles.GetComponent<Rigidbody2D>();
+            padrid.constraints = RigidbodyConstraints2D.FreezePosition;
+        }
+        if (leftScoreNumber == 11)
+        {
+            WhoWon.text = $"P1";
+        }
+        else if (rightScoreNumber == 11)
+        {
+            WhoWon.text = $"P2";
+        }
+        WinMenu.SetActive(true);
+        Invoke("PlayAgain", 2);
+            //display win, replay menu
+    }
+    public void PlayAgain()
+    {
+        SceneManager.LoadScene("PlayAgain");
     }
     float launchAngle(Vector2 ball, Vector2 paddle, float paddleHeight) 
     {

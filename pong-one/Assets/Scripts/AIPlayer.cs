@@ -4,30 +4,69 @@ using UnityEngine;
 
 public class AIPlayer : Paddle
 {
-    public Rigidbody2D ball;
+	private float reAdjustSpeed = 1f;
+	public static bool isTwoPlayer;
+	public Rigidbody2D rb2d;
+    public float delay = 0.01f;
     private void FixedUpdate()
     {
-        if (this.ball.velocity.x > 0.0f)
+        speed = 3f;
+
+		//Is the ball going left or right
+		if (rb2d.velocity.x > 0) 
         {
-            if (this.ball.velocity.y > this.transform.position.y)
+
+			if (rb2d.velocity.y > 0) {
+				if (rb2d.position.y > _Ridgy.position.y) 
+                {
+					MoveUp();
+				}
+				
+				if (rb2d.position.y < _Ridgy.position.y) 
+                {
+					MoveDown();
+				}
+			} 
+
+			if (rb2d.velocity.y < 0) 
             {
-                _Ridgy.AddForce(Vector2.up * this.speed);
-            }
-            else if (this.ball.position.y < this.transform.position.y)
-            {
-                _Ridgy.AddForce(Vector2.down * this.speed);
-            }
-        }
-        else
-        {
-            if (this.transform.position.y > 0.0f)
-            {
-                _Ridgy.AddForce(Vector2.down * this.speed);
-            }
-            else if (this.transform.position.y < 0.0f)
-            {
-                _Ridgy.AddForce(Vector2.up * this.speed);
-            }
-        }
-    }
+				if (rb2d.position.y > _Ridgy.position.y) 
+                {
+					MoveUp ();
+				}
+				if (rb2d.position.y < _Ridgy.position.y) 
+                {
+					MoveDown ();
+				}
+			}
+
+		}
+
+			//Whilst it's not moving at the paddle, let it gain a slight reset by moving with the ball at a slower pace. 
+			if (rb2d.velocity.x < 0) {
+				if (_Ridgy.position.y < 0) {
+					_Ridgy.position += Vector2.up * reAdjustSpeed * delay;
+				}
+
+				if (_Ridgy.position.y > 0) {
+					_Ridgy.position += Vector2.down * reAdjustSpeed * delay;
+				}
+			}
+		}
+	void MoveDown() {
+		if (Mathf.Abs(rb2d.velocity.y) > speed) {
+			_Ridgy.position += Vector2.down * speed * delay;
+		} else {
+			_Ridgy.position += Vector2.down * speed * delay;
+		}
+	}
+
+	void MoveUp() {
+		if (Mathf.Abs (rb2d.velocity.y) > speed) {
+			_Ridgy.position += Vector2.up * speed * delay;
+		} else {
+			_Ridgy.position += Vector2.up * speed * delay;
+		}
+	}
+
 }

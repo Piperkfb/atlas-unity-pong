@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Paddle : MonoBehaviour
@@ -14,7 +15,7 @@ public class Paddle : MonoBehaviour
         _Ridgy = GetComponent<Rigidbody2D>();
         _RidgyPos = GetComponent<RectTransform>();
         //ResetPos = _RidgyPos.anchoredPosition;        
-        ResetPos = _Ridgy.transform.position;
+        ResetPos = _Ridgy.transform.localPosition;
         //ResetPos = _RidgyPos.sizeDelta;
     }
     private void Start()
@@ -30,9 +31,19 @@ public class Paddle : MonoBehaviour
     {
         if (boink.gameObject.CompareTag("Wall"))
         {
-            Debug.Log ("My head/butt");
-
-            _Ridgy.velocity = Vector2.zero;
+            
+            if (boink.gameObject.transform.position.y > 0)
+            {
+                //(boink.gameObject.transform.position.y + 50)
+                Debug.Log ("My head/butt");
+                _Ridgy.velocity = Vector2.zero;
+                transform.localPosition = new Vector2 (transform.localPosition.x, 550);
+            }
+            else
+            {
+                _Ridgy.velocity = Vector2.zero;
+                transform.localPosition = new Vector2 (transform.localPosition.x, -550);
+            }
         }
     }
     public Vector2 AnchorPos()
