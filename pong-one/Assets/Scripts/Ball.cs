@@ -164,7 +164,6 @@ public class Ball : MonoBehaviour
             SoundFX.Play();
         }
         WinMenu.SetActive(true);
-        SoundFX.clip = SFXWin;
         SoundFX.Play();
         Invoke("PlayAgain", 2);
         //display win, replay menu
