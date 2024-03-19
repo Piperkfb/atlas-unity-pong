@@ -259,7 +259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98275e6fab025fb4dad97466eed1d8e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1000
+  speed: 3000
   upKey: 273
   downKey: 274
 --- !u!50 &102957716
@@ -3649,7 +3649,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AspectMode: 0
-  m_AspectRatio: 0.065996855
+  m_AspectRatio: 0.055460986
 --- !u!61 &2110309565
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3925,7 +3925,7 @@ PrefabInstance:
       objectReference: {fileID: 1107935120}
     - target: {fileID: 8098213901298050703, guid: bfbec6d4b6f9e5e4498cfa4c2bf44605, type: 3}
       propertyPath: speed
-      value: 10000
+      value: 9000
       objectReference: {fileID: 0}
     - target: {fileID: 8098213901298050703, guid: bfbec6d4b6f9e5e4498cfa4c2bf44605, type: 3}
       propertyPath: SFXPad

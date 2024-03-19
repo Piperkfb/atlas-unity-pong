@@ -25,6 +25,7 @@ public class PauseMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            Debug.Log ("Es ca pe");
             if (!PMenu.activeInHierarchy)
             {
                 Pause();
