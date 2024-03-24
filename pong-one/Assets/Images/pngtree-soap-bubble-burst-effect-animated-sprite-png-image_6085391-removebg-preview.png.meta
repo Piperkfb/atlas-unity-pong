@@ -1,0 +1,336 @@
+fileFormatVersion: 2
+guid: 5bfb460cf54c2a54683709b56b60dd22
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: pngtree-soap-bubble-burst-effect-animated-sprite-png-image_6085391-removebg-preview_0
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 32
+        width: 75
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92ad0f61a6a9f334995536f5820f7e64
+      internalID: -298754614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pngtree-soap-bubble-burst-effect-animated-sprite-png-image_6085391-removebg-preview_1
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 250
+        width: 75
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5208062dd5a2484498220f8f714e864
+      internalID: 1384726064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pngtree-soap-bubble-burst-effect-animated-sprite-png-image_6085391-removebg-preview_2
+      rect:
+        serializedVersion: 2
+        x: 264
+        y: 250
+        width: 75
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71ac4ecdae3965a4b9be9f2ffab7405c
+      internalID: 560660977
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pngtree-soap-bubble-burst-effect-animated-sprite-png-image_6085391-removebg-preview_3
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 143
+        width: 75
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5b553d551915f845965cac294641039
+      internalID: 549665651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pngtree-soap-bubble-burst-effect-animated-sprite-png-image_6085391-removebg-preview_4
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 143
+        width: 75
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00a3f8812a3f0754ab2ff06cec726244
+      internalID: 601677646
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pngtree-soap-bubble-burst-effect-animated-sprite-png-image_6085391-removebg-preview_5
+      rect:
+        serializedVersion: 2
+        x: 264
+        y: 144
+        width: 75
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fdc06a5972a189147bc1d163c34c6ca0
+      internalID: -2045767669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pngtree-soap-bubble-burst-effect-animated-sprite-png-image_6085391-removebg-preview_6
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 34
+        width: 75
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96b26402009d143489bc6fffe9061974
+      internalID: 1958493227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pngtree-soap-bubble-burst-effect-animated-sprite-png-image_6085391-removebg-preview_7
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 250
+        width: 75
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b16c93274504a8546be5f3c14356840a
+      internalID: -268369583
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pngtree-soap-bubble-burst-effect-animated-sprite-png-image_6085391-removebg-preview_8
+      rect:
+        serializedVersion: 2
+        x: 264
+        y: 34
+        width: 75
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 941053a2957ca38479f6831d7e8d170b
+      internalID: -2016531576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      pngtree-soap-bubble-burst-effect-animated-sprite-png-image_6085391-removebg-preview_0: -298754614
+      pngtree-soap-bubble-burst-effect-animated-sprite-png-image_6085391-removebg-preview_1: 1384726064
+      pngtree-soap-bubble-burst-effect-animated-sprite-png-image_6085391-removebg-preview_10: -1660469443
+      pngtree-soap-bubble-burst-effect-animated-sprite-png-image_6085391-removebg-preview_11: -1020500354
+      pngtree-soap-bubble-burst-effect-animated-sprite-png-image_6085391-removebg-preview_12: -1812864498
+      pngtree-soap-bubble-burst-effect-animated-sprite-png-image_6085391-removebg-preview_13: -1007861222
+      pngtree-soap-bubble-burst-effect-animated-sprite-png-image_6085391-removebg-preview_14: -907172174
+      pngtree-soap-bubble-burst-effect-animated-sprite-png-image_6085391-removebg-preview_15: -1962298184
+      pngtree-soap-bubble-burst-effect-animated-sprite-png-image_6085391-removebg-preview_16: 1966226916
+      pngtree-soap-bubble-burst-effect-animated-sprite-png-image_6085391-removebg-preview_17: 850408258
+      pngtree-soap-bubble-burst-effect-animated-sprite-png-image_6085391-removebg-preview_18: 568371566
+      pngtree-soap-bubble-burst-effect-animated-sprite-png-image_6085391-removebg-preview_19: 989086657
+      pngtree-soap-bubble-burst-effect-animated-sprite-png-image_6085391-removebg-preview_2: 560660977
+      pngtree-soap-bubble-burst-effect-animated-sprite-png-image_6085391-removebg-preview_3: 549665651
+      pngtree-soap-bubble-burst-effect-animated-sprite-png-image_6085391-removebg-preview_4: 601677646
+      pngtree-soap-bubble-burst-effect-animated-sprite-png-image_6085391-removebg-preview_5: -2045767669
+      pngtree-soap-bubble-burst-effect-animated-sprite-png-image_6085391-removebg-preview_6: 1958493227
+      pngtree-soap-bubble-burst-effect-animated-sprite-png-image_6085391-removebg-preview_7: -268369583
+      pngtree-soap-bubble-burst-effect-animated-sprite-png-image_6085391-removebg-preview_8: -2016531576
+      pngtree-soap-bubble-burst-effect-animated-sprite-png-image_6085391-removebg-preview_9: -73245460
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

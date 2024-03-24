@@ -8,6 +8,7 @@ public class Player : Paddle
     public KeyCode upKey = KeyCode.W;
     public KeyCode downKey = KeyCode.S;
     private Vector2 direction;
+    public float speed;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,7 +35,7 @@ public class Player : Paddle
     {
         if (direction.sqrMagnitude > 0)
         {
-            _Ridgy.AddForce(direction * speed);
+            _Ridgy.AddForce(direction * speed * 3);
         }    
     }
 

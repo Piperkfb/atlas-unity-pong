@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEditor.SearchService;
 using UnityEngine.SceneManagement;
+using System.Data.Common;
 
 
 public class Ball : MonoBehaviour
@@ -26,12 +27,16 @@ public class Ball : MonoBehaviour
     public TMP_Text whoScored;
     public TMP_Text WhoWon;
     private Vector2 BallResetPos;
+    public Animator Anime;
+    private RectTransform flipper;
     
     private void Awake()
     {
         _ridgy = GetComponent<Rigidbody2D>();
         _ridgypos = GetComponent<RectTransform>();
         BallResetPos = _ridgypos.transform.position;
+        Anime = GetComponentInChildren<Animator>();
+        flipper = transform.Find("FlipParent").GetComponent<RectTransform>();
     }
 
     private void Start()
@@ -49,15 +54,14 @@ public class Ball : MonoBehaviour
             Com.SetActive(false);
         }
     }
-    // protected void startingPositions()
-    // {
-    //     GameObject[] allpaddles = GameObject.FindGameObjectsWithTag("Paddle");
-    //     foreach(GameObject paddles in allpaddles)
-    //     {
-    //         Paddle padd = paddles.GetComponent<Paddle>();
 
-    //     }
-    // }
+    private void BubblePop()
+    {
+        //starts after counter = 0
+        //reduce collider to fly size
+        //remove bubble after pop
+        //set fly as scorable
+    }
 
     private void AddStartingForce()
     {
@@ -65,7 +69,13 @@ public class Ball : MonoBehaviour
         float y = Random.value < 0.5f ? Random.Range(-1.0f, -0.5f) : Random.Range(0.5f, 1.0f);
         Vector2 direction = new Vector2(x,y);
 
-        _ridgy.AddForce(direction * this.speed);
+        _ridgy.AddForce(direction * this.speed * 3);
+
+        //fly facing
+        if (direction.x > 0)
+            flipper.transform.eulerAngles = (new Vector3(0, 180, 0));
+        else
+            flipper.transform.eulerAngles = (new Vector3(0, 0, 0));    
     }
     private void Update()
     {
@@ -88,10 +98,15 @@ public class Ball : MonoBehaviour
             
             //direction.y = -direction.y;
             _ridgy.velocity = Vector2.zero;
-            _ridgy.AddForce(d * this.speed);
+            _ridgy.AddForce(d * this.speed * 3);
             //Sound FX
             SoundFX.clip = SFXPad;
             SoundFX.Play();
+            //animations
+            if (d.x > 0)
+                flipper.transform.eulerAngles = (new Vector3(0, 180, 0));
+            else 
+                flipper.transform.eulerAngles = (new Vector3(0, 0, 0));
         } 
         if (boink.gameObject.CompareTag("Wall"))
         {
@@ -102,6 +117,8 @@ public class Ball : MonoBehaviour
             //sound FX
             SoundFX.clip = SFXWall;
             SoundFX.Play();
+            //anmiation
+            Anime.SetTrigger("WallHit");
         }
         if (boink.gameObject.CompareTag("Goal"))
         {

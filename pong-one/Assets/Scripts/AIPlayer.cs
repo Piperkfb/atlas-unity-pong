@@ -8,6 +8,7 @@ public class AIPlayer : Paddle
 	public static bool isTwoPlayer;
 	public Rigidbody2D rb2d;
     public float delay = 0.01f;
+	public float speed;
     private void FixedUpdate()
     {
         speed = 3f;
@@ -45,27 +46,27 @@ public class AIPlayer : Paddle
 			//Whilst it's not moving at the paddle, let it gain a slight reset by moving with the ball at a slower pace. 
 			if (rb2d.velocity.x < 0) {
 				if (_Ridgy.position.y < 0) {
-					_Ridgy.position += Vector2.up * reAdjustSpeed * delay;
+					_Ridgy.position += Vector2.up * reAdjustSpeed * delay * 3;
 				}
 
 				if (_Ridgy.position.y > 0) {
-					_Ridgy.position += Vector2.down * reAdjustSpeed * delay;
+					_Ridgy.position += Vector2.down * reAdjustSpeed * delay * 3;
 				}
 			}
 		}
 	void MoveDown() {
 		if (Mathf.Abs(rb2d.velocity.y) > speed) {
-			_Ridgy.position += Vector2.down * speed * delay;
+			_Ridgy.position += Vector2.down * speed * delay * 3;
 		} else {
-			_Ridgy.position += Vector2.down * speed * delay;
+			_Ridgy.position += Vector2.down * speed * delay * 3;
 		}
 	}
 
 	void MoveUp() {
 		if (Mathf.Abs (rb2d.velocity.y) > speed) {
-			_Ridgy.position += Vector2.up * speed * delay;
+			_Ridgy.position += Vector2.up * speed * delay * 3;
 		} else {
-			_Ridgy.position += Vector2.up * speed * delay;
+			_Ridgy.position += Vector2.up * speed * delay * 3;
 		}
 	}
 

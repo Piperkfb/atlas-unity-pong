@@ -7,7 +7,6 @@ public class Paddle : MonoBehaviour
 {
     protected Rigidbody2D _Ridgy;
     private RectTransform _RidgyPos;
-    public float speed = 100.0f;
     private Vector2 ResetPos;
 
     private void Awake()
