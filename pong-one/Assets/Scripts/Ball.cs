@@ -19,16 +19,18 @@ public class Ball : MonoBehaviour
     public float speed;
     public GameObject scoreMenu;
     public GameObject WinMenu;
+    public ScreenShaker BG;
     public GameObject P2, Com;
-    public TMP_Text leftScore;
-    public TMP_Text rightScore;
-    private float leftScoreNumber = 0;
-    private float rightScoreNumber = 0;
-    public TMP_Text whoScored;
-    public TMP_Text WhoWon;
+    public TMP_Text leftScore, rightScore;
+    private float leftScoreNumber, rightScoreNumber = 0;
+    public TMP_Text whoScored, WhoWon;
     private Vector2 BallResetPos;
-    public Animator Anime;
+    private Animator Anime;
     private RectTransform flipper;
+    public float healthBub = 3;
+    private bool popped = false;
+    public Image flyimg;
+    public GameObject Bub;
     
     private void Awake()
     {
@@ -37,10 +39,13 @@ public class Ball : MonoBehaviour
         BallResetPos = _ridgypos.transform.position;
         Anime = GetComponentInChildren<Animator>();
         flipper = transform.Find("FlipParent").GetComponent<RectTransform>();
+        flyimg = transform.Find("FlipParent/Fly").GetComponent<Image>();
+        BG.GetComponent<ScreenShaker>();
     }
 
     private void Start()
     {
+        
         AddStartingForce();
         SoundFX = this.GetComponent<AudioSource>();
         if (ModeMenu.ComOn == true)
@@ -55,13 +60,7 @@ public class Ball : MonoBehaviour
         }
     }
 
-    private void BubblePop()
-    {
-        //starts after counter = 0
-        //reduce collider to fly size
-        //remove bubble after pop
-        //set fly as scorable
-    }
+
 
     private void AddStartingForce()
     {
@@ -71,6 +70,7 @@ public class Ball : MonoBehaviour
 
         _ridgy.AddForce(direction * this.speed * 3);
 
+
         //fly facing
         if (direction.x > 0)
             flipper.transform.eulerAngles = (new Vector3(0, 180, 0));
@@ -79,34 +79,45 @@ public class Ball : MonoBehaviour
     }
     private void Update()
     {
-
+        
     }
 
     protected void OnTriggerEnter2D(Collider2D boink)
     {
         if (boink.gameObject.CompareTag("Paddle"))
         {
-            RectTransform paddlepos = boink.gameObject.GetComponent<RectTransform>();
-            
-            //calculate angle
-            float y = launchAngle(AnchorPos(), paddlepos.anchoredPosition, paddlepos.sizeDelta.y / 2f);
+            if (popped == true)
+            {
+                Scored();
+            }
+            else
+            {
+                RectTransform paddlepos = boink.gameObject.GetComponent<RectTransform>();
+                
+                //calculate angle
+                float y = launchAngle(AnchorPos(), paddlepos.anchoredPosition, paddlepos.sizeDelta.y / 2f);
 
-            //set angle and speed
-            float x = _ridgy.velocity.x < 0 ? 1.0f : -1.0f;
-            Vector2 d = new Vector2(x, y).normalized;
-            //_ridgy.velocity = d * this.speed * 1.5F;
-            
-            //direction.y = -direction.y;
-            _ridgy.velocity = Vector2.zero;
-            _ridgy.AddForce(d * this.speed * 3);
-            //Sound FX
-            SoundFX.clip = SFXPad;
-            SoundFX.Play();
-            //animations
-            if (d.x > 0)
-                flipper.transform.eulerAngles = (new Vector3(0, 180, 0));
-            else 
-                flipper.transform.eulerAngles = (new Vector3(0, 0, 0));
+                //set angle and speed
+                float x = _ridgy.velocity.x < 0 ? 1.0f : -1.0f;
+                Vector2 d = new Vector2(x, y).normalized;
+                //_ridgy.velocity = d * this.speed * 1.5F;
+                
+                //direction.y = -direction.y;
+                _ridgy.velocity = Vector2.zero;
+                _ridgy.AddForce(d * this.speed * 3);
+                //Sound FX
+                SoundFX.clip = SFXPad;
+                SoundFX.Play();
+                //animations
+                if (d.x > 0)
+                    flipper.transform.eulerAngles = (new Vector3(0, 180, 0));
+                else 
+                    flipper.transform.eulerAngles = (new Vector3(0, 0, 0));
+
+                //-1 bubble health
+                healthBub -= 1;
+                BubbleHealth();
+            }
         } 
         if (boink.gameObject.CompareTag("Wall"))
         {
@@ -119,44 +130,62 @@ public class Ball : MonoBehaviour
             SoundFX.Play();
             //anmiation
             Anime.SetTrigger("WallHit");
-        }
-        if (boink.gameObject.CompareTag("Goal"))
-        {
-            Debug.Log ("Goal!!");
-            _ridgy.velocity = Vector2.zero;
-            if (boink.gameObject.transform.localPosition.x > 0)
-            {
-                leftScoreNumber++;
-                leftScore.text = $"{leftScoreNumber}";
-                whoScored.text = $"P1";
-            }
-            else if (boink.gameObject.transform.localPosition.x < 0)
-            {
-                rightScoreNumber++;
-                rightScore.text = $"{rightScoreNumber}";
-                whoScored.text = $"P2";
-            }
-            SoundFX.clip = SFXScore;
-            SoundFX.Play();
-            if (leftScoreNumber == 11 || rightScoreNumber == 11)
-            {
-                WinScreen();
-            }
-            else
-            {
-                scoreMenu.SetActive(true);
-                GameObject[] allpaddles = GameObject.FindGameObjectsWithTag("Paddle");
-                foreach(GameObject paddles in allpaddles)
-                {
-                    Rigidbody2D padrid = paddles.GetComponent<Rigidbody2D>();
-                    padrid.constraints = RigidbodyConstraints2D.FreezePosition;
-                }
-                Invoke("ResetPos", 2.0f);
-                Invoke("AddStartingForce", 3.0f);
-            }
-            
+            //screen shake
+            BG.ScreenShakeForTime(0.5f);
         }
 
+
+    }
+    private void Scored()
+    {
+        Debug.Log ("Goal!!");
+        _ridgy.velocity = Vector2.zero;
+        if (this.gameObject.transform.localPosition.x > 0)
+        {
+            leftScoreNumber++;
+            leftScore.text = $"{leftScoreNumber}";
+            whoScored.text = $"P1";
+        }
+        else if (this.gameObject.transform.localPosition.x < 0)
+        {
+            rightScoreNumber++;
+            rightScore.text = $"{rightScoreNumber}";
+            whoScored.text = $"P2";
+        }
+        SoundFX.clip = SFXScore;
+        SoundFX.Play();
+        if (leftScoreNumber == 11 || rightScoreNumber == 11)
+        {
+            WinScreen();
+        }
+        else
+        {
+            scoreMenu.SetActive(true);
+
+            Invoke("ResetPos", 2.0f);
+            Invoke("AddStartingForce", 3.0f);
+        }
+    }
+    private void BubblePop()
+    {
+        //reduce collider to fly size
+        CircleCollider2D Circ = GetComponent<CircleCollider2D>();
+        Circ.radius = 4;
+        //make not transparent anymore
+
+        flyimg.color = new Color(1f, 1f, 1f, 1f);
+        //remove bubble after pop
+        //Bub.SetActive(false);
+        Anime.SetTrigger("Popped");
+        //set fly as scorable
+        popped = true;
+    }
+    private void BubbleHealth()
+    {
+        if (this.healthBub == 0)
+        {
+            BubblePop();
+        }
     }
     private void WinScreen()
     {
@@ -203,12 +232,11 @@ public class Ball : MonoBehaviour
     }
     private void ResetPos()
     {
-        GameObject[] allpaddles = GameObject.FindGameObjectsWithTag("Paddle");
-        foreach(GameObject paddles in allpaddles)
-            {
-                Rigidbody2D padrid = paddles.GetComponent<Rigidbody2D>();
-                padrid.constraints = RigidbodyConstraints2D.None;
-            }
+
+        Bub.SetActive(true);
+        CircleCollider2D Circ = GetComponent<CircleCollider2D>();
+        Circ.radius = 10;
+        flyimg.color = new Color(1f, 1f, 1f, 0.5f);
         _ridgypos.transform.position = BallResetPos;
         scoreMenu.SetActive(false);
     }
