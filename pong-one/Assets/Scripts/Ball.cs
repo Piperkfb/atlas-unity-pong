@@ -13,17 +13,14 @@ using System.Data.Common;
 public class Ball : MonoBehaviour
 {
     private AudioSource SoundFX;
-    public AudioClip SFXPad, SFXWall, SFXScore, SFXWin, SFXLose;
+    public AudioClip SFXPad, SFXWall;
     private Rigidbody2D _ridgy; 
     private RectTransform _ridgypos;
+    public GameObject daFly;
     public float speed;
-    public GameObject scoreMenu;
-    public GameObject WinMenu;
     public ScreenShaker BG;
+    public GameHandler GH;
     public GameObject P2, Com;
-    public TMP_Text leftScore, rightScore;
-    private float leftScoreNumber, rightScoreNumber = 0;
-    public TMP_Text whoScored, WhoWon;
     private Vector2 BallResetPos;
     private Animator Anime;
     private RectTransform flipper;
@@ -79,7 +76,9 @@ public class Ball : MonoBehaviour
     }
     private void Update()
     {
-        
+        //speed checking
+        //fly facing
+            //if ridgy.velocity.x is >< 0, flip fly
     }
 
     protected void OnTriggerEnter2D(Collider2D boink)
@@ -88,7 +87,8 @@ public class Ball : MonoBehaviour
         {
             if (popped == true)
             {
-                Scored();
+                GH.Scored();
+                Destroy(daFly);
             }
             else
             {
@@ -131,41 +131,27 @@ public class Ball : MonoBehaviour
             //anmiation
             Anime.SetTrigger("WallHit");
             //screen shake
-            BG.ScreenShakeForTime(0.5f);
+            //BG.ScreenShakeForTime(0.5f);
         }
+        if (boink.gameObject.CompareTag("Goal"))
+        {
+            Vector2 VelSave = _ridgy.velocity;
+            VelSave.x = -VelSave.x;
+            _ridgy.velocity = VelSave;
+        }
+        if (boink.gameObject.CompareTag("Ball"))
+        {
+            Vector2 VelSave = _ridgy.velocity;
+            float xneg = VelSave.x < 0 ? 1.0f : -1.0f;
+            float yneg = VelSave.y < 0 ? 1.0f : -1.0f;
+            VelSave.x = -VelSave.x + xneg;
+            VelSave.y = -VelSave.y + xneg;
+            _ridgy.velocity = VelSave;
 
+        }
 
     }
-    private void Scored()
-    {
-        Debug.Log ("Goal!!");
-        _ridgy.velocity = Vector2.zero;
-        if (this.gameObject.transform.localPosition.x > 0)
-        {
-            leftScoreNumber++;
-            leftScore.text = $"{leftScoreNumber}";
-            whoScored.text = $"P1";
-        }
-        else if (this.gameObject.transform.localPosition.x < 0)
-        {
-            rightScoreNumber++;
-            rightScore.text = $"{rightScoreNumber}";
-            whoScored.text = $"P2";
-        }
-        SoundFX.clip = SFXScore;
-        SoundFX.Play();
-        if (leftScoreNumber == 11 || rightScoreNumber == 11)
-        {
-            WinScreen();
-        }
-        else
-        {
-            scoreMenu.SetActive(true);
-
-            Invoke("ResetPos", 2.0f);
-            Invoke("AddStartingForce", 3.0f);
-        }
-    }
+    
     private void BubblePop()
     {
         //reduce collider to fly size
@@ -174,8 +160,6 @@ public class Ball : MonoBehaviour
         //make not transparent anymore
 
         flyimg.color = new Color(1f, 1f, 1f, 1f);
-        //remove bubble after pop
-        //Bub.SetActive(false);
         Anime.SetTrigger("Popped");
         //set fly as scorable
         popped = true;
@@ -187,37 +171,8 @@ public class Ball : MonoBehaviour
             BubblePop();
         }
     }
-    private void WinScreen()
-    {
-        //pause paddles
-        
-        GameObject[] allpaddles = GameObject.FindGameObjectsWithTag("Paddle");
-        foreach(GameObject paddles in allpaddles)
-        {
-            Rigidbody2D padrid = paddles.GetComponent<Rigidbody2D>();
-            padrid.constraints = RigidbodyConstraints2D.FreezePosition;
-        }
-        if (leftScoreNumber == 11)
-        {
-            WhoWon.text = $"P1";
-            SoundFX.clip = SFXWin;
-            SoundFX.Play();
-        }
-        else if (rightScoreNumber == 11)
-        {
-            WhoWon.text = $"P2";
-            SoundFX.clip = SFXLose;
-            SoundFX.Play();
-        }
-        WinMenu.SetActive(true);
-        SoundFX.Play();
-        Invoke("PlayAgain", 2);
-        //display win, replay menu
-    }
-    public void PlayAgain()
-    {
-        SceneManager.LoadScene("PlayAgain");
-    }
+    
+
     float launchAngle(Vector2 ball, Vector2 paddle, float paddleHeight) 
     {
         return (ball.y - paddle.y) / paddleHeight;
@@ -238,6 +193,6 @@ public class Ball : MonoBehaviour
         Circ.radius = 10;
         flyimg.color = new Color(1f, 1f, 1f, 0.5f);
         _ridgypos.transform.position = BallResetPos;
-        scoreMenu.SetActive(false);
+        //scoreMenu.SetActive(false);
     }
 }
