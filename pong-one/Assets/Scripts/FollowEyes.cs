@@ -16,6 +16,8 @@ public class FollowEyes : MonoBehaviour
 
     void Update()
     {
+        //checks most recent fly spawn as player
+            //do it
         Vector3 lookDir = (Player.position - mPupilCenterPos).normalized;
         Pupil.position = mPupilCenterPos + (lookDir * EyeRadius);
     }

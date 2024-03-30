@@ -12,11 +12,13 @@ using System.Data.Common;
 
 public class Ball : MonoBehaviour
 {
+    public Color slowCol, midCol, fastCol;
     private AudioSource SoundFX;
     public AudioClip SFXPad, SFXWall;
     private Rigidbody2D _ridgy; 
     private RectTransform _ridgypos;
     public GameObject daFly;
+    public Vector2 SpeedIndicat_1;
     public float speed;
     public ScreenShaker BG;
     public GameHandler GH;
@@ -28,6 +30,8 @@ public class Ball : MonoBehaviour
     private bool popped = false;
     public Image flyimg;
     public GameObject Bub;
+    private TrailRenderer myTrailRenderer;
+    public Player PL;
     
     private void Awake()
     {
@@ -38,6 +42,7 @@ public class Ball : MonoBehaviour
         flipper = transform.Find("FlipParent").GetComponent<RectTransform>();
         flyimg = transform.Find("FlipParent/Fly").GetComponent<Image>();
         BG.GetComponent<ScreenShaker>();
+        myTrailRenderer = GetComponent<TrailRenderer>();
     }
 
     private void Start()
@@ -74,11 +79,31 @@ public class Ball : MonoBehaviour
         else
             flipper.transform.eulerAngles = (new Vector3(0, 0, 0));    
     }
+    private void FixedUpdate() 
+    {
+        Vector2 Abbvec = AbsVec(_ridgy.velocity);
+        //speed checking
+        if (Abbvec.x <= 300 || Abbvec.y <= 300)
+        {
+            myTrailRenderer.material.color = slowCol;
+        }
+        else if ((Abbvec.x > 300 || Abbvec.y > 300) && (Abbvec.x <= 600 || Abbvec.y <= 600))
+        {
+            myTrailRenderer.material.color = midCol;
+        }
+        else if (Abbvec.x > 600 || Abbvec.y > 600)
+        {
+            myTrailRenderer.material.color = fastCol; 
+        }
+    }
     private void Update()
     {
-        //speed checking
+
         //fly facing
-            //if ridgy.velocity.x is >< 0, flip fly
+        if (_ridgy.velocity.x > 0)
+            flipper.transform.eulerAngles = (new Vector3(0, 180, 0));
+        else
+            flipper.transform.eulerAngles = (new Vector3(0, 0, 0));    
     }
 
     protected void OnTriggerEnter2D(Collider2D boink)
@@ -89,6 +114,10 @@ public class Ball : MonoBehaviour
             {
                 GH.Scored();
                 Destroy(daFly);
+            }
+            else if (GH.specActive2) 
+            {
+
             }
             else
             {
@@ -104,7 +133,7 @@ public class Ball : MonoBehaviour
                 
                 //direction.y = -direction.y;
                 _ridgy.velocity = Vector2.zero;
-                _ridgy.AddForce(d * this.speed * 3);
+                _ridgy.AddForce(d * this.speed * 4);
                 //Sound FX
                 SoundFX.clip = SFXPad;
                 SoundFX.Play();
@@ -115,8 +144,16 @@ public class Ball : MonoBehaviour
                     flipper.transform.eulerAngles = (new Vector3(0, 0, 0));
 
                 //-1 bubble health
-                healthBub -= 1;
-                BubbleHealth();
+                if (GH.specActive1 == true)
+                {
+                    healthBub -= 2;
+                    GH.specActive1 = false;
+                }
+                else
+                {
+                    healthBub -= 1;
+                    BubbleHealth();
+                }
             }
         } 
         if (boink.gameObject.CompareTag("Wall"))
@@ -136,8 +173,14 @@ public class Ball : MonoBehaviour
         if (boink.gameObject.CompareTag("Goal"))
         {
             Vector2 VelSave = _ridgy.velocity;
-            VelSave.x = -VelSave.x;
+            Debug.Log(VelSave);
+            float xneg = VelSave.x < 0 ? 1.0f : -1.0f;
+            float yneg = VelSave.y < 0 ? 1.0f : -1.0f;
+            VelSave.x = -VelSave.x + xneg;
+            VelSave.y = -VelSave.y + xneg;
             _ridgy.velocity = VelSave;
+            Debug.Log(_ridgy.velocity);
+            
         }
         if (boink.gameObject.CompareTag("Ball"))
         {
@@ -147,7 +190,7 @@ public class Ball : MonoBehaviour
             VelSave.x = -VelSave.x + xneg;
             VelSave.y = -VelSave.y + xneg;
             _ridgy.velocity = VelSave;
-
+            Debug.Log(_ridgy.velocity);
         }
 
     }
@@ -165,11 +208,17 @@ public class Ball : MonoBehaviour
         popped = true;
     }
     private void BubbleHealth()
-    {
-        if (this.healthBub == 0)
+    {   
+        if (this.healthBub < 0)
+        {
+            GH.Scored();
+            Destroy(daFly);
+        }
+        else if (this.healthBub == 0)
         {
             BubblePop();
         }
+
     }
     
 
@@ -180,6 +229,10 @@ public class Ball : MonoBehaviour
     public Vector2 AnchorPos()
     {
         return _ridgypos.anchoredPosition;
+    }
+    public Vector2 AbsVec(Vector2 v2)
+    {
+        return new Vector2 (Mathf.Abs(v2.x), Mathf.Abs(v2.y));
     }
     IEnumerator Wait(float seconds)
     {
