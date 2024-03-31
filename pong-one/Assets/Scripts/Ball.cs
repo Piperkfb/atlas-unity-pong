@@ -12,7 +12,7 @@ using System.Data.Common;
 
 public class Ball : MonoBehaviour
 {
-    public Color slowCol, midCol, fastCol;
+    public Color slowCol, midCol, fastCol, Health2, Health1;
     private AudioSource SoundFX;
     public AudioClip SFXPad, SFXWall;
     private Rigidbody2D _ridgy; 
@@ -29,7 +29,7 @@ public class Ball : MonoBehaviour
     public float healthBub = 3;
     private bool popped = false;
     public Image flyimg;
-    public GameObject Bub;
+    public Image Bub;
     private TrailRenderer myTrailRenderer;
     public Player PL;
     
@@ -110,14 +110,18 @@ public class Ball : MonoBehaviour
     {
         if (boink.gameObject.CompareTag("Paddle"))
         {
+            bool lefty = boink.GetComponent<Player>().isleft;
             if (popped == true)
             {
-                GH.Scored();
+                GH.Scored(daFly);
                 Destroy(daFly);
             }
-            else if (GH.specActive2) 
+            else if ((GH.specActive2L == true && lefty == true) ||
+                    (GH.specActive2R == true && lefty == false))
             {
 
+                GH.Scored(daFly);
+                Destroy(daFly);
             }
             else
             {
@@ -144,21 +148,36 @@ public class Ball : MonoBehaviour
                     flipper.transform.eulerAngles = (new Vector3(0, 0, 0));
 
                 //-1 bubble health
-                if (GH.specActive1 == true)
+                if (GH.specActive1L == true && lefty == true)
                 {
                     healthBub -= 2;
-                    GH.specActive1 = false;
+                    GH.specActive1L = false;
+                    BubbleHealth();
+                }
+                else if (GH.specActive1R == true && lefty == false)
+                {
+                    healthBub -= 2;
+                    GH.specActive1R = false;
+                    BubbleHealth();
                 }
                 else
                 {
                     healthBub -= 1;
                     BubbleHealth();
+
+                }
+                if (healthBub == 2)
+                {
+                    Bub.GetComponent<Image>().color = Health2;
+                }
+                else if (healthBub == 1)
+                {
+                    Bub.GetComponent<Image>().color = Health1;
                 }
             }
         } 
         if (boink.gameObject.CompareTag("Wall"))
         {
-            
             Vector2 VelSave = _ridgy.velocity;
             VelSave.y = -VelSave.y;
             _ridgy.velocity = VelSave;
@@ -173,14 +192,9 @@ public class Ball : MonoBehaviour
         if (boink.gameObject.CompareTag("Goal"))
         {
             Vector2 VelSave = _ridgy.velocity;
-            Debug.Log(VelSave);
             float xneg = VelSave.x < 0 ? 1.0f : -1.0f;
-            float yneg = VelSave.y < 0 ? 1.0f : -1.0f;
             VelSave.x = -VelSave.x + xneg;
-            VelSave.y = -VelSave.y + xneg;
             _ridgy.velocity = VelSave;
-            Debug.Log(_ridgy.velocity);
-            
         }
         if (boink.gameObject.CompareTag("Ball"))
         {
@@ -190,7 +204,6 @@ public class Ball : MonoBehaviour
             VelSave.x = -VelSave.x + xneg;
             VelSave.y = -VelSave.y + xneg;
             _ridgy.velocity = VelSave;
-            Debug.Log(_ridgy.velocity);
         }
 
     }
@@ -211,7 +224,7 @@ public class Ball : MonoBehaviour
     {   
         if (this.healthBub < 0)
         {
-            GH.Scored();
+            GH.Scored(daFly);
             Destroy(daFly);
         }
         else if (this.healthBub == 0)
@@ -238,14 +251,5 @@ public class Ball : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(seconds);
     }
-    private void ResetPos()
-    {
 
-        Bub.SetActive(true);
-        CircleCollider2D Circ = GetComponent<CircleCollider2D>();
-        Circ.radius = 10;
-        flyimg.color = new Color(1f, 1f, 1f, 0.5f);
-        _ridgypos.transform.position = BallResetPos;
-        //scoreMenu.SetActive(false);
-    }
 }

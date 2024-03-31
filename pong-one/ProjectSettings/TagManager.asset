@@ -9,6 +9,7 @@ TagManager:
   - Goal
   - Ball
   - Canvas
+  - Pollen
   layers:
   - Default
   - TransparentFX

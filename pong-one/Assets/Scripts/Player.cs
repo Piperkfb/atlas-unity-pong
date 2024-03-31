@@ -8,6 +8,7 @@ public class Player : Paddle
     public KeyCode upKey = KeyCode.W;
     public KeyCode downKey = KeyCode.S;
     public KeyCode specialKey = KeyCode.LeftShift;
+    public bool isleft;
     private Vector2 direction;
     public GameHandler GH;
     public float speed;
@@ -15,7 +16,7 @@ public class Player : Paddle
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
@@ -35,7 +36,7 @@ public class Player : Paddle
         }
         if (Input.GetKeyDown(specialKey))
         {
-            GH.SpecialHandler();
+            GH.SpecialHandler(isleft);
         }
     }
     private void FixedUpdate() 
@@ -45,4 +46,5 @@ public class Player : Paddle
             _Ridgy.AddForce(direction * speed * 3);
         }    
     }
+    
 }
