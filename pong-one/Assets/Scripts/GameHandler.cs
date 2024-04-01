@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class GameHandler : MonoBehaviour
 {
+    public GameObject P2, Com;
     private AudioSource SoundFX;
     public GameObject ball;
     public GameObject pollen;
@@ -35,6 +36,16 @@ public class GameHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (ModeMenu.ComOn == true)
+        {
+            P2.SetActive(false);
+            Com.SetActive(true);
+        }
+        else if (ModeMenu.ComOn == false)
+        {
+            P2.SetActive(true);
+            Com.SetActive(false);
+        }
         SoundFX = this.GetComponent<AudioSource>();
         spawntimer = Random.Range(ballspawnv1, ballspawnv2);
         Pspawntimer = Random.Range(pollenspawnv1, pollenspawnv2);

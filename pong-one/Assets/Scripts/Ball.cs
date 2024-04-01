@@ -8,6 +8,8 @@ using TMPro;
 using UnityEditor.SearchService;
 using UnityEngine.SceneManagement;
 using System.Data.Common;
+using System;
+using Random = UnityEngine.Random;
 
 
 public class Ball : MonoBehaviour
@@ -15,14 +17,14 @@ public class Ball : MonoBehaviour
     public Color slowCol, midCol, fastCol, Health2, Health1;
     private AudioSource SoundFX;
     public AudioClip SFXPad, SFXWall;
-    private Rigidbody2D _ridgy; 
+    [HideInInspector] public Rigidbody2D _ridgy; 
     private RectTransform _ridgypos;
     public GameObject daFly;
     public Vector2 SpeedIndicat_1;
     public float speed;
     public ScreenShaker BG;
     public GameHandler GH;
-    public GameObject P2, Com;
+    public GameObject currentportal;
     private Vector2 BallResetPos;
     private Animator Anime;
     private RectTransform flipper;
@@ -50,16 +52,7 @@ public class Ball : MonoBehaviour
         
         AddStartingForce();
         SoundFX = this.GetComponent<AudioSource>();
-        if (ModeMenu.ComOn == true)
-        {
-            P2.SetActive(false);
-            Com.SetActive(true);
-        }
-        else if (ModeMenu.ComOn == false)
-        {
-            P2.SetActive(true);
-            Com.SetActive(false);
-        }
+
     }
 
 
@@ -179,7 +172,8 @@ public class Ball : MonoBehaviour
         if (boink.gameObject.CompareTag("Wall"))
         {
             Vector2 VelSave = _ridgy.velocity;
-            VelSave.y = -VelSave.y;
+            float yneg = VelSave.y < 0 ? 1.0f : -1.0f;
+            VelSave.y = -VelSave.y + yneg;
             _ridgy.velocity = VelSave;
             //sound FX
             SoundFX.clip = SFXWall;
@@ -205,7 +199,46 @@ public class Ball : MonoBehaviour
             VelSave.y = -VelSave.y + xneg;
             _ridgy.velocity = VelSave;
         }
+        if (boink.gameObject.CompareTag("Duck"))
+        {
+            // get the direction of the collision
+            Vector3 direction = transform.position - boink.gameObject.transform.position;
+            // see if the obect is futher left/right or up down
+            if (Mathf.Abs (direction.x) > Mathf.Abs (direction.y)) 
+            {
+                Vector2 VelSave = _ridgy.velocity;
+                float xneg = VelSave.x < 0 ? 1.0f : -1.0f;
+                VelSave.x = -VelSave.x + xneg;
+                _ridgy.velocity = VelSave;
 
+            }
+            else
+            {
+                Vector2 VelSave = _ridgy.velocity;
+                float yneg = VelSave.y < 0 ? 1.0f : -1.0f;
+                VelSave.y = -VelSave.y + yneg;
+                _ridgy.velocity = VelSave;
+            }	
+	    }
+        if (boink.gameObject.CompareTag("Portal"))
+        {
+            if (currentportal == null)
+            {
+                currentportal = boink.gameObject;
+                transform.position = currentportal.GetComponent<Portal>().GetDestination().position;
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D bop) 
+    {
+        if (bop.gameObject.CompareTag("Portal"))
+        {
+            if (bop.gameObject != currentportal)
+            {
+                currentportal = null;
+            }
+        }   
     }
     
     private void BubblePop()

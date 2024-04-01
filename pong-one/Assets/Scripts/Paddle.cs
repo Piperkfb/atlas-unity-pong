@@ -29,13 +29,11 @@ public class Paddle : MonoBehaviour
             if (boink.gameObject.transform.position.y > 0)
             {
                 //(boink.gameObject.transform.position.y + 50)
-                Debug.Log ("My head");
                 // _Ridgy.velocity = Vector2.zero;
                 // transform.localPosition = new Vector2 (transform.localPosition.x, 422);
             }
             else
             {
-                Debug.Log ("My butt");
 
                 // _Ridgy.velocity = Vector2.zero;
                 // transform.localPosition = new Vector2 (transform.localPosition.x, -422);

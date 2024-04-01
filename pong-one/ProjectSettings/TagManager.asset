@@ -10,6 +10,9 @@ TagManager:
   - Ball
   - Canvas
   - Pollen
+  - Duck
+  - Destroyer
+  - Portal
   layers:
   - Default
   - TransparentFX
