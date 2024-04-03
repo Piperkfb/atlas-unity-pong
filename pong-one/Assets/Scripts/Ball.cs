@@ -16,7 +16,8 @@ public class Ball : MonoBehaviour
 {
     public Color slowCol, midCol, fastCol, Health2, Health1;
     private AudioSource SoundFX;
-    public AudioClip SFXPad, SFXWall;
+    public AudioClip SFXPad, SFXWall, SFXSpawn;
+    public AudioClip[] SFXducks, SFXpops;
     [HideInInspector] public Rigidbody2D _ridgy; 
     private RectTransform _ridgypos;
     public GameObject daFly;
@@ -30,39 +31,41 @@ public class Ball : MonoBehaviour
     private RectTransform flipper;
     public float healthBub = 3;
     private bool popped = false;
+    [SerializeField] private bool passing = false;
     public Image flyimg;
     public Image Bub;
     private TrailRenderer myTrailRenderer;
-    public Player PL;
+    public bool isDragon;
     
     private void Awake()
     {
         _ridgy = GetComponent<Rigidbody2D>();
         _ridgypos = GetComponent<RectTransform>();
         BallResetPos = _ridgypos.transform.position;
-        Anime = GetComponentInChildren<Animator>();
+        Anime = transform.Find("Bubble").GetComponent<Animator>();
         flipper = transform.Find("FlipParent").GetComponent<RectTransform>();
         flyimg = transform.Find("FlipParent/Fly").GetComponent<Image>();
-        BG.GetComponent<ScreenShaker>();
+        //BG.GetComponent<ScreenShaker>();
         myTrailRenderer = GetComponent<TrailRenderer>();
+        SoundFX = GetComponent<AudioSource>();
     }
 
     private void Start()
     {
-        
-        AddStartingForce();
-        SoundFX = this.GetComponent<AudioSource>();
+                                                                //spawn sound
+        SoundFX.clip = SFXSpawn;
+        SoundFX.Play();
+        Invoke("AddStartingForce", 1);
+        //AddStartingForce();
 
     }
-
-
 
     private void AddStartingForce()
     {
         float x = Random.value < 0.5f ? -1.0f : 1.0f;
         float y = Random.value < 0.5f ? Random.Range(-1.0f, -0.5f) : Random.Range(0.5f, 1.0f);
         Vector2 direction = new Vector2(x,y);
-
+        myTrailRenderer.enabled = true;
         _ridgy.AddForce(direction * this.speed * 3);
 
 
@@ -104,7 +107,13 @@ public class Ball : MonoBehaviour
         if (boink.gameObject.CompareTag("Paddle"))
         {
             bool lefty = boink.GetComponent<Player>().isleft;
-            if (popped == true)
+
+            Vector3 direction = transform.position - boink.gameObject.transform.position;
+            if (direction.x < 0 && lefty == true || direction.x > 0 && lefty == false)
+            {
+                passing = true;
+            }
+            else if (popped == true)
             {
                 GH.Scored(daFly);
                 Destroy(daFly);
@@ -112,7 +121,6 @@ public class Ball : MonoBehaviour
             else if ((GH.specActive2L == true && lefty == true) ||
                     (GH.specActive2R == true && lefty == false))
             {
-
                 GH.Scored(daFly);
                 Destroy(daFly);
             }
@@ -132,7 +140,7 @@ public class Ball : MonoBehaviour
                 _ridgy.velocity = Vector2.zero;
                 _ridgy.AddForce(d * this.speed * 4);
                 //Sound FX
-                SoundFX.clip = SFXPad;
+                SoundFX.clip = SFXPad;                                                   //change
                 SoundFX.Play();
                 //animations
                 if (d.x > 0)
@@ -185,6 +193,9 @@ public class Ball : MonoBehaviour
         }
         if (boink.gameObject.CompareTag("Goal"))
         {
+            SoundFX.clip = SFXWall;
+            SoundFX.Play();
+                                    //sound
             Vector2 VelSave = _ridgy.velocity;
             float xneg = VelSave.x < 0 ? 1.0f : -1.0f;
             VelSave.x = -VelSave.x + xneg;
@@ -192,6 +203,7 @@ public class Ball : MonoBehaviour
         }
         if (boink.gameObject.CompareTag("Ball"))
         {
+                                //sound
             Vector2 VelSave = _ridgy.velocity;
             float xneg = VelSave.x < 0 ? 1.0f : -1.0f;
             float yneg = VelSave.y < 0 ? 1.0f : -1.0f;
@@ -201,6 +213,9 @@ public class Ball : MonoBehaviour
         }
         if (boink.gameObject.CompareTag("Duck"))
         {
+            // sound
+            SoundFX.clip = SFXducks[Random.Range(0, SFXducks.Length)];
+            SoundFX.Play();
             // get the direction of the collision
             Vector3 direction = transform.position - boink.gameObject.transform.position;
             // see if the obect is futher left/right or up down
@@ -238,6 +253,13 @@ public class Ball : MonoBehaviour
             {
                 currentportal = null;
             }
+        }
+        if (bop.gameObject.CompareTag("Paddle"))
+        {
+            if (passing == true)
+            {
+                passing = false;
+            }
         }   
     }
     
@@ -250,6 +272,9 @@ public class Ball : MonoBehaviour
 
         flyimg.color = new Color(1f, 1f, 1f, 1f);
         Anime.SetTrigger("Popped");
+                                                                    // sound
+        SoundFX.clip = SFXpops[Random.Range(0, SFXpops.Length)];
+        SoundFX.Play();
         //set fly as scorable
         popped = true;
     }

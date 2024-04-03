@@ -5,6 +5,7 @@ using UnityEngine;
 public class Pollen : MonoBehaviour
 {
     private Rigidbody2D _ridgy;
+    public AudioSource CollectSFX;
     public float speed = 7000;
     public GameHandler GH;
     public GameObject pollen;
@@ -50,6 +51,7 @@ public class Pollen : MonoBehaviour
                     GH.specialBarRight += 1;
                 }
             }
+            CollectSFX.Play();
             Destroy(pollen);
         }
         if (boink.gameObject.CompareTag("Wall"))

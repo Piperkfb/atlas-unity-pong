@@ -39,6 +39,10 @@ public class Player : Paddle
             GH.SpecialHandler(isleft);
         }
     }
+    private void ParticleOn()
+    {
+        
+    }
     private void FixedUpdate() 
     {
         if (direction.sqrMagnitude > 0)

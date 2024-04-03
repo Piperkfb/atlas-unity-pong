@@ -8,6 +8,7 @@ public class MainMenu : MonoBehaviour
 {
     public Button playButton;
     public Button quitButton;
+    public Button tutButton;
     private AudioSource OddEO;
     public AudioClip SFClick;
     // Start is called before the first frame update
@@ -16,6 +17,7 @@ public class MainMenu : MonoBehaviour
         playButton.onClick.AddListener(PlayGame);
         quitButton.onClick.AddListener(QuitGame);
         OddEO = this.GetComponent<AudioSource>();
+        tutButton.onClick.AddListener(Tutorial);
     }
 
     protected void PlayGame()
@@ -29,6 +31,10 @@ public class MainMenu : MonoBehaviour
         OddEO.clip = SFClick;
         OddEO.Play();
         Application.Quit();
+    }
+    protected void Tutorial()
+    {
+        SceneManager.LoadScene("Tutorial");
     }
     void Update()
     {

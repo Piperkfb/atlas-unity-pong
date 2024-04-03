@@ -10,37 +10,35 @@ public class PauseMenu : MonoBehaviour
     public Button menuButton;
     public Button resumeButton;
     public GameObject PMenu;
-    private AudioSource OddEO;
+    public AudioSource OddEO;
     public AudioClip SFClick;
     // Start is called before the first frame update
     void Start()
     {
-
         restartButton.onClick.AddListener(Restart);
         menuButton.onClick.AddListener(MainMenu);
         resumeButton.onClick.AddListener(Resume);
-        OddEO = this.GetComponent<AudioSource>();
     }
   void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Debug.Log ("Es ca pe");
             if (!PMenu.activeInHierarchy)
             {
+                OddEO.clip = SFClick;
+                OddEO.Play();
                 Pause();
             }
             else
             {
-                
+                OddEO.clip = SFClick;
+                OddEO.Play();
                 Resume();
             }
         }
     }
         public void Pause()
     {
-        OddEO.clip = SFClick;
-        OddEO.Play();
         Time.timeScale = 0;
         PMenu.SetActive(true);
     }
