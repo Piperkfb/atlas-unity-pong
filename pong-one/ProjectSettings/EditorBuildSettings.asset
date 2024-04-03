@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PlayAgain.unity
     guid: 39db8803e0824104a894eed7d3b0bc32
+  - enabled: 1
+    path: Assets/Scenes/Tutorial.unity
+    guid: b280ea8cf5776f34e8434ec752c57997
   m_configObjects: {}

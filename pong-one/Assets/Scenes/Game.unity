@@ -284,6 +284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28c6ed87b2eb3044cbae1721d67f4e6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  points: []
 --- !u!1 &64133984
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,6 +315,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28c6ed87b2eb3044cbae1721d67f4e6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  points: []
 --- !u!120 &64133986
 LineRenderer:
   serializedVersion: 2
@@ -733,8 +735,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b991bc4568612fc4a96fffb5ae01062d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GH: {fileID: 1471169301}
   Pupil: {fileID: 1016989831}
-  Player: {fileID: 722486726}
+  Ball: {fileID: 0}
   EyeRadius: 10
 --- !u!222 &155300032
 CanvasRenderer:
@@ -1421,11 +1424,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 675526755}
   m_CullTransparentMesh: 1
---- !u!224 &722486726 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 4617735382506322615, guid: bfbec6d4b6f9e5e4498cfa4c2bf44605, type: 3}
-  m_PrefabInstance: {fileID: 7043911939644637381}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &746519479
 GameObject:
   m_ObjectHideFlags: 0
@@ -1859,8 +1857,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b991bc4568612fc4a96fffb5ae01062d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GH: {fileID: 1471169301}
   Pupil: {fileID: 1847101170}
-  Player: {fileID: 722486726}
+  Ball: {fileID: 0}
   EyeRadius: 10
 --- !u!222 &980786045
 CanvasRenderer:
@@ -3735,6 +3734,8 @@ MonoBehaviour:
   specActive2L: 0
   specActive1R: 0
   specActive2R: 0
+  newball: {fileID: 0}
+  Eyes: {fileID: 0}
 --- !u!82 &1471169302
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4715,8 +4716,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b991bc4568612fc4a96fffb5ae01062d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GH: {fileID: 1471169301}
   Pupil: {fileID: 1559188811}
-  Player: {fileID: 722486726}
+  Ball: {fileID: 0}
   EyeRadius: 10
 --- !u!222 &1774244674
 CanvasRenderer:
@@ -5736,8 +5738,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b991bc4568612fc4a96fffb5ae01062d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GH: {fileID: 1471169301}
   Pupil: {fileID: 380343581}
-  Player: {fileID: 722486726}
+  Ball: {fileID: 0}
   EyeRadius: 10
 --- !u!222 &1994819624
 CanvasRenderer:

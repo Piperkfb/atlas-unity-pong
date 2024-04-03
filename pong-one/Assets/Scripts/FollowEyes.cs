@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class FollowEyes : MonoBehaviour
 {
+    public GameHandler GH;
     public Transform Pupil;
-    public Transform Player;
+    public Transform Ball;
     public float EyeRadius = 1f;
     Vector3 mPupilCenterPos;
 
@@ -14,11 +15,13 @@ public class FollowEyes : MonoBehaviour
         mPupilCenterPos = Pupil.position;
     }
 
+
     void Update()
     {
+        Ball = GH.newball.GetComponent<Transform>();
         //checks most recent fly spawn as player
             //do it
-        Vector3 lookDir = (Player.position - mPupilCenterPos).normalized;
+        Vector3 lookDir = (Ball.position - mPupilCenterPos).normalized;
         Pupil.position = mPupilCenterPos + (lookDir * EyeRadius);
     }
 }

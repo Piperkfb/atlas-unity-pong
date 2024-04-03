@@ -29,7 +29,7 @@ public class GameHandler : MonoBehaviour
     public bool specActive2L = false;
     public bool specActive1R = false;
     public bool specActive2R = false;
-
+    public GameObject newball;
 
     // Start is called before the first frame update
     void Start()
@@ -50,8 +50,8 @@ public class GameHandler : MonoBehaviour
         Dspawntimer = Random.Range(duckspawnv1, duckspawnv2);
         Gspawntimer = Random.Range(goldspawnv1, goldspawnv2);
         Tspawntimer = Random.Range(teleportspawnv1, teleportspawnv2);
-        Instantiate(ball, transform.position, Quaternion.identity, GameObject.FindGameObjectWithTag("Canvas").transform);
-
+        newball = Instantiate(ball, transform.position, Quaternion.identity, GameObject.FindGameObjectWithTag("Canvas").transform);
+        
     }
 
     // Update is called once per frame
@@ -66,10 +66,7 @@ public class GameHandler : MonoBehaviour
         if (Bspawntimer <= 0)
         {
             Vector3 RandSpawn = new Vector3(Random.Range(-360, 360), Random.Range(-360, 360), 0);
-            GameObject newball = Instantiate(ball, transform.position + RandSpawn, Quaternion.identity, GameObject.FindGameObjectWithTag("Canvas").transform);
-            
-            // newball.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
-            // newball.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+            newball = Instantiate(ball, transform.position + RandSpawn, Quaternion.identity, GameObject.FindGameObjectWithTag("Canvas").transform);
             Bspawntimer = Random.Range(ballspawnv1, ballspawnv2);
         }
         if (Pspawntimer <= 0)

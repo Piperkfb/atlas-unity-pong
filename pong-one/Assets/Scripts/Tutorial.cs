@@ -6,12 +6,18 @@ using UnityEngine.UI;
 
 public class Tutorial : MonoBehaviour
 {
-    private bool KeyLock = false;
     public TMP_Text TextBox;
+
+    private IEnumerable startText;
 
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("Started");
+        startText = TextBoxing();
+        //StartCoroutine("TextBoxing");
+        StartCoroutine((IEnumerator)startText);
+        Debug.Log("after start");
         //Welcome to Frong {input}
         //Your objective is to gather as many flies as you can {input}
             //show fly
@@ -49,9 +55,9 @@ public class Tutorial : MonoBehaviour
             //show ducks and portals
         //Got all that? Ok! Have fun! You can always come back to review the rules again
     }
-    IEnumerable TextBoxing()
+    private IEnumerable TextBoxing()
     {
-        TextBox.text = $"";
+        Debug.Log("Couroutine started");
         TextBox.text = $"Welcome to Frong!";
         yield return waitForKeyPress();
         TextBox.text = $"Your objective is to eat as many flies as you can";
@@ -99,17 +105,11 @@ public class Tutorial : MonoBehaviour
         yield return null;
     }
 
-    IEnumerable TextClickThrough(float wait)
-    {
-        KeyLock = true;
-        yield return new WaitForSeconds(wait);
-        KeyLock = false;
 
-    }
     private IEnumerator waitForKeyPress()
 {
     bool done = false;
-    yield return new WaitForSeconds(0.1f);
+    //yield return new WaitForSeconds(0.1f);
     while(!done) // essentially a "while true", but with a bool to break out naturally
     {
         if(Input.anyKey)

@@ -5,11 +5,12 @@ using UnityEngine;
 public class lr_render : MonoBehaviour
 {
     private LineRenderer lr;
-    private Transform[] points;
+    public Transform[] points;
     // Start is called before the first frame update
     void Start()
     {
         lr = GetComponent<LineRenderer>();
+        LineSetup(points);
     }
 
     public void LineSetup(Transform[] points)
