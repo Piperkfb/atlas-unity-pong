@@ -18,10 +18,14 @@ public class FollowEyes : MonoBehaviour
 
     void Update()
     {
-        Ball = GH.newball.GetComponent<Transform>();
+        if (GH.newball != null)
+        {
+            Ball = GH.newball.GetComponent<Transform>();
+        
         //checks most recent fly spawn as player
             //do it
         Vector3 lookDir = (Ball.position - mPupilCenterPos).normalized;
         Pupil.position = mPupilCenterPos + (lookDir * EyeRadius);
+        }
     }
 }

@@ -56,7 +56,6 @@ public class Pollen : MonoBehaviour
         }
         if (boink.gameObject.CompareTag("Wall"))
         {
-            Debug.Log("Pollen to wall");
 
             Vector2 VelSave = _ridgy.velocity;
             VelSave.y = -VelSave.y;

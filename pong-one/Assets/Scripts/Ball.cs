@@ -127,7 +127,7 @@ public class Ball : MonoBehaviour
             else
             {
                 RectTransform paddlepos = boink.gameObject.GetComponent<RectTransform>();
-                
+                BG.ScreenShakeForTime(0.3f);
                 //calculate angle
                 float y = launchAngle(AnchorPos(), paddlepos.anchoredPosition, paddlepos.sizeDelta.y / 2f);
 

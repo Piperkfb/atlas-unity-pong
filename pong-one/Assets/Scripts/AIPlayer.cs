@@ -9,10 +9,11 @@ public class AIPlayer : Paddle
 	public Rigidbody2D rb2d;
     public float delay = 0.01f;
 	public float speed;
+	public GameHandler GH;
     private void FixedUpdate()
     {
         speed = 3f;
-
+		rb2d = GH.newball.GetComponent<Rigidbody2D>();
 		//Is the ball going left or right
 		if (rb2d.velocity.x > 0) 
         {

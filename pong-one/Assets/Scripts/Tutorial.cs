@@ -8,15 +8,15 @@ public class Tutorial : MonoBehaviour
 {
     public TMP_Text TextBox;
 
-    private IEnumerable startText;
+    private IEnumerator startText;
 
     // Start is called before the first frame update
     void Start()
     {
         Debug.Log("Started");
         startText = TextBoxing();
-        //StartCoroutine("TextBoxing");
-        StartCoroutine((IEnumerator)startText);
+        //StartCoroutine(TextBoxing);
+        StartCoroutine(startText);
         Debug.Log("after start");
         //Welcome to Frong {input}
         //Your objective is to gather as many flies as you can {input}
@@ -55,7 +55,7 @@ public class Tutorial : MonoBehaviour
             //show ducks and portals
         //Got all that? Ok! Have fun! You can always come back to review the rules again
     }
-    private IEnumerable TextBoxing()
+    private IEnumerator TextBoxing()
     {
         Debug.Log("Couroutine started");
         TextBox.text = $"Welcome to Frong!";
@@ -109,7 +109,7 @@ public class Tutorial : MonoBehaviour
     private IEnumerator waitForKeyPress()
 {
     bool done = false;
-    //yield return new WaitForSeconds(0.1f);
+    yield return new WaitForSeconds(0.5f);
     while(!done) // essentially a "while true", but with a bool to break out naturally
     {
         if(Input.anyKey)
