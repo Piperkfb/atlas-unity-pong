@@ -9,51 +9,22 @@ public class Tutorial : MonoBehaviour
     public TMP_Text TextBox;
 
     private IEnumerator startText;
+    public Image fly;
+    public Image fbubble;
+    public Image wkeyimg, skeyimg;
+    public Animator skey, wkey, player, fbub;
+    public GameObject dragon;
+    public GameObject dbubble;
+    public GameObject pollen;
+    public GameObject p1;
 
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("Started");
         startText = TextBoxing();
-        //StartCoroutine(TextBoxing);
         StartCoroutine(startText);
-        Debug.Log("after start");
-        //Welcome to Frong {input}
-        //Your objective is to gather as many flies as you can {input}
-            //show fly
-        //you move your tongue with the W S keys or Up and Down Arrows if player two
-        //but, uh oh! the flies are trapped in bubbles {input}
-            //put bubble on fly
-        //every bubble needs 3 hits to pop
-            //show hit hit pop
-        //but be careful, just cause you popped the bubble doesn't mean your 
-        //opponent can't snatch it away from you
-            //second player eats fly
-        //only the tip of your tongue is sticky enough to effect the bubble, if the bubble hits the back of your tongue, you won't even touch it{}
-            //show example
-        //every fly is one point {input}
-        //if you come across a rare dragonfly, you'll gain 3 points for eating one! {input}
-            //show dragon fly
-        // on top you have special bars
-            //show
-        //you gain special points by collecting floating pollen
-            //show pollen
-        //pollen is so light and small, it doesn't run into anything except the playing field
-            //show
-        //to use your special, press your corresponding side's shift key [default]{input}
-        // use one bar of special to go through two layers of bubblw (if there's only 1 layer left, you'll pierce through the fly and score!)
-            //show
-        //if you're able to grab 5 special points, the next time you use your special, you'll activate super mode!
-            //show
-        //for an amount of time, you'll be able to collect any and all flies with one hit
-            //show
-        //the game ends after the timer hits zero
-            //show
-        //the highest scoring player wins
-            //show
-        //be aware, many hazards and obsticles may get in your way, so be careful!
-            //show ducks and portals
-        //Got all that? Ok! Have fun! You can always come back to review the rules again
+
+
     }
     private IEnumerator TextBoxing()
     {
@@ -61,11 +32,23 @@ public class Tutorial : MonoBehaviour
         TextBox.text = $"Welcome to Frong!";
         yield return waitForKeyPress();
         TextBox.text = $"Your objective is to eat as many flies as you can";
+        //fly reveal
+            fly.color = new Color(1f, 1f, 1f, 1f);
         yield return waitForKeyPress();
         TextBox.text = $"But, Uh Oh! The flies are trapped in bubbles!";
+        //bubble trigger, fly hlaf opacity
+            fly.color = new Color(1f, 1f, 1f, 0.5f);
+            fbubble.color = new Color(1f, 1f, 1f, 1f);
         yield return waitForKeyPress();
         TextBox.text = $"You move your tongue with the W & S Keys or Up & Down Arrows if Player two";
+            wkeyimg.color = new Color(1f, 1f, 1f, 1f);
+            skeyimg.color = new Color(1f, 1f, 1f, 1f);
+            wkey.SetTrigger("Key");
+            skey.SetTrigger("Key");
+            player.SetTrigger("player1");
         yield return waitForKeyPress();
+            wkeyimg.color = new Color(1f, 1f, 1f, 0f);
+            skeyimg.color = new Color(1f, 1f, 1f, 0f);
         TextBox.text = $"Use your tongue to pop the bubbles and catch the fly";
         yield return waitForKeyPress();
         TextBox.text = $"Every bubble needs 3 hits to pop";
@@ -127,3 +110,39 @@ public class Tutorial : MonoBehaviour
         
     }
 }
+        //Welcome to Frong {input}
+        //Your objective is to gather as many flies as you can {input}
+            //show fly
+        //you move your tongue with the W S keys or Up and Down Arrows if player two
+        //but, uh oh! the flies are trapped in bubbles {input}
+            //put bubble on fly
+        //every bubble needs 3 hits to pop
+            //show hit hit pop
+        //but be careful, just cause you popped the bubble doesn't mean your 
+        //opponent can't snatch it away from you
+            //second player eats fly
+        //only the tip of your tongue is sticky enough to effect the bubble, if the bubble hits the back of your tongue, you won't even touch it{}
+            //show example
+        //every fly is one point {input}
+        //if you come across a rare dragonfly, you'll gain 3 points for eating one! {input}
+            //show dragon fly
+        // on top you have special bars
+            //show
+        //you gain special points by collecting floating pollen
+            //show pollen
+        //pollen is so light and small, it doesn't run into anything except the playing field
+            //show
+        //to use your special, press your corresponding side's shift key [default]{input}
+        // use one bar of special to go through two layers of bubblw (if there's only 1 layer left, you'll pierce through the fly and score!)
+            //show
+        //if you're able to grab 5 special points, the next time you use your special, you'll activate super mode!
+            //show
+        //for an amount of time, you'll be able to collect any and all flies with one hit
+            //show
+        //the game ends after the timer hits zero
+            //show
+        //the highest scoring player wins
+            //show
+        //be aware, many hazards and obsticles may get in your way, so be careful!
+            //show ducks and portals
+        //Got all that? Ok! Have fun! You can always come back to review the rules again
